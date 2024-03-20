@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BlackjackApplicationTests {
 
 	@Test
-	public void canGenerateDeck() {
+	public void TestCanGenerateDeck() {
 		//Arrange
-		GameDeck deck = new GameDeck(1);
+		GameDeck deck = new GameDeck(7);
 		//Act
 		deck.createGameDeck();
 		//Assert

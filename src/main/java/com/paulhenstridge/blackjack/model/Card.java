@@ -1,15 +1,18 @@
 package com.paulhenstridge.blackjack.model;
 
 public class Card {
-    private String name;
+    private String suit;
     private int value;
 
     private boolean isFaceUp;
 
-    public Card() {};
+    public Card(String suit, int value) {
+        this.suit = suit;
+        this.value = value;
+    };
 
-    public String getName() {
-        return name;
+    public String getSuit() {
+        return suit;
     }
 
     public int getValue() {

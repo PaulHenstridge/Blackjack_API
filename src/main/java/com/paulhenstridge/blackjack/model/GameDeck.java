@@ -18,7 +18,9 @@ public class GameDeck {
     public void createGameDeck(){
         for( int i = 0; i< numberOfDecks; i++){
             for( CardData cardData : CardData.values()){
-                System.out.println(cardData);
+                System.out.println(cardData.getSuit());
+                Card card = new Card(cardData.getSuit(), cardData.getValue());
+                cards.add(card);
             }
         }
     }
