@@ -5,7 +5,7 @@ public class Card {
     private int value;
 
     private boolean isFaceUp;
-
+// TODO - only return suit/val if isFaceUp
     public Card(String suit, int value) {
         this.suit = suit;
         this.value = value;
