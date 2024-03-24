@@ -10,10 +10,11 @@ public class Hand {
     public Hand() {}
 
     public int calcValue(){
+        value = 0;
         for(Card card : cards){
             value += card.getValue();
         }
-        return value;
+        return value > 21 ? 0 : value;
     }
 
     public List<Card> getCards() {

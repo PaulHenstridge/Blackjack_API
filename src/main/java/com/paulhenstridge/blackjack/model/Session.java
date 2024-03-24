@@ -32,6 +32,7 @@ public class Session {
         currentRound = new Round(activePlayers,gameDeck.shuffle());
         currentRound.dealCards();
         currentRound.hitOrStand();
+        currentRound.dealersTurn();
         currentRound.declareWinners();
         prevRounds.add(currentRound);
     }
