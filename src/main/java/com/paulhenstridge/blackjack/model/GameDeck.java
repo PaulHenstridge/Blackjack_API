@@ -14,6 +14,8 @@ public class GameDeck {
 
     public GameDeck(int numberOfDecks){
         this.numberOfDecks = numberOfDecks;
+
+        createGameDeck();
     }
 
     public void createGameDeck(){

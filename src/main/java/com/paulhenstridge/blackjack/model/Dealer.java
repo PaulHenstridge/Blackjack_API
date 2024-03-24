@@ -1,7 +1,7 @@
 package com.paulhenstridge.blackjack.model;
 
 public class Dealer {
-    Hand dealersHand;
+    Hand dealersHand = new Hand();
 
     public Hand getDealersHand() {
         return dealersHand;

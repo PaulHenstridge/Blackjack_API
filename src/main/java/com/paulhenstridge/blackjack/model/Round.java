@@ -10,11 +10,12 @@ import java.util.Scanner;
 public class Round {
     List<Player> players;
     Dealer dealer = new Dealer();
-    List<Hand> playerHands;
+    List<Hand> playerHands = new ArrayList<>();
     int prizePot;
     boolean roundIsComplete;
     List<Card> deck;
     private final Scanner scanner = new Scanner(System.in);
+    List<Player> winners = new ArrayList<>();
 
     public Round(List<Player> players, List<Card> deck){
         this.players = players;
@@ -36,6 +37,7 @@ public class Round {
             while (true) {
                 System.out.print("Do you want to hit (H) or stand (S)? : ");
                 String decision = scanner.nextLine().trim().toLowerCase();
+//                String decision = "s";
                 if ("s".equals(decision)) {
                     break;
                 } else if ("h".equals(decision)) {
@@ -50,7 +52,19 @@ public class Round {
                 }
             }
         }
-    // declareWinners()
+    }
+    public List<Player> declareWinners(){
+        int dealerScore = dealer.getDealersHand().calcValue();
+        for(Player player : players){
+            if (player.getHand().calcValue() > dealerScore){
+                winners.add(player);
+            }
+        }
+        for( Player winner : winners) {
+            System.out.println(winner.playerName);
+        }
+        return winners;
+    }
 
     // a method that loops over each player in turn until all are stuck.
     // if a player in players is not on stick, ask them the question...
