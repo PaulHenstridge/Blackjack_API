@@ -7,7 +7,7 @@ public class Player {
     private int wallet = 100;
     private int wins = 0;
 
-    public boolean isActive = true;
+    public boolean isActive = false;
     private int stake;
 
     public Player(String playerName){

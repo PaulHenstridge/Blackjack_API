@@ -2,6 +2,7 @@ package com.paulhenstridge.blackjack.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Session {
 
@@ -12,10 +13,34 @@ public class Session {
     Round currentRound;
 
     List<Round> prevRounds = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
 
     public Session(GameDeck gameDeck, List<Player> players){
         this.gameDeck = gameDeck;
         this.players = players;
+         while (players.size()>0){
+             takeBets();
+             playRound();
+         }
+
+    }
+
+    public void takeBets(){
+        for(Player player : players){
+            System.out.println("Player " + player.playerName + " do you want to play (Y/N)?");
+            String response = scanner.nextLine().trim().toLowerCase();
+            if("y".equals(response) ){
+                player.isActive = true;
+                player.setStake(5);
+            }
+            if("n".equals(response) ){
+                System.out.println("Do you wish to exit the session? (press X to exit)");
+                String exit = scanner.nextLine().trim().toLowerCase();
+                if( "x".equals(exit)){
+                    leaveSession(player);
+                }
+            }
+        }
     }
 
     public List<Player> setActivePlayers(){
@@ -35,6 +60,17 @@ public class Session {
         currentRound.dealersTurn();
         currentRound.declareWinners();
         prevRounds.add(currentRound);
+    }
+
+    public void leaveSession(Player player){
+        players.remove(player);
+        if(players.size() == 0){
+            endSession();
+        }
+    }
+
+    private void endSession(){
+        System.out.println("Session has ended.  print some scores, stats etc");
     }
 
     public GameDeck getGameDeck() {

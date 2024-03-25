@@ -16,11 +16,19 @@ public class BlackjackApplication {
 
 		Player bob = new Player("Bob");
 		Player jim = new Player("Jim");
+		Player jamRod = new Player("JamRod");
+		Player fergal = new Player("Fergal");
+		Player titan = new Player("Titan");
+		Player melon = new Player("Melon");
 		GameDeck deck = new GameDeck(2);
 
 		List<Player> players = new ArrayList<>();
 		players.add(bob);
 		players.add(jim);
+		players.add(jamRod);
+		players.add(fergal);
+		players.add(titan);
+		players.add(melon);
 
 		deck = new GameDeck(2);
 		Session session = new Session(deck, players);
