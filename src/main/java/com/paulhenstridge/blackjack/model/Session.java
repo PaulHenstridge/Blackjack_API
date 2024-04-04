@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Session {
 
-    GameDeck gameDeck;
-    List<Player> players;
+    GameDeck gameDeck = new GameDeck(1);
+    List<Player> players = new ArrayList<>();
     List<Player> activePlayers = new ArrayList<>();
 
     Round currentRound;
@@ -15,9 +15,8 @@ public class Session {
     List<Round> prevRounds = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
 
-    public Session(GameDeck gameDeck, List<Player> players){
-        this.gameDeck = gameDeck;
-        this.players = players;
+    public Session(){
+
          while (players.size()>0){
              takeBets();
              playRound();
@@ -60,6 +59,15 @@ public class Session {
         currentRound.dealersTurn();
         currentRound.declareWinners();
         prevRounds.add(currentRound);
+    }
+
+    public String joinSession(Player player){
+        if(players.size() >= 8){
+            return "Sorry, table is full";
+        } else {
+            players.add(player);
+            return "Welcome, " + player.playerName;
+        }
     }
 
     public void leaveSession(Player player){
