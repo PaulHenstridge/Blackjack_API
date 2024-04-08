@@ -14,10 +14,6 @@ public class BlackjackApplication {
 
 	public static void main(String[] args) {
 
-		
-		Session session = new Session();
-
-		session.playRound();
 		SpringApplication.run(BlackjackApplication.class, args);
 	}
 

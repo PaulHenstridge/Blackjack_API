@@ -29,7 +29,7 @@ class BlackjackApplicationTests {
 		players.add(jim);
 
 		deck = new GameDeck(2);
-		session = new Session(deck, players);
+		session = new Session();
 	}
 
 

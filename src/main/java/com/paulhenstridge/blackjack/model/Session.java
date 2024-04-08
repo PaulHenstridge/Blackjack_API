@@ -61,13 +61,12 @@ public class Session {
         prevRounds.add(currentRound);
     }
 
-    public String joinSession(Player player){
-        if(players.size() >= 8){
-            return "Sorry, table is full";
-        } else {
-            players.add(player);
-            return "Welcome, " + player.playerName;
-        }
+    public boolean canJoin(){
+        return (players.size() < 4);
+    }
+    public String joinSession(Player player) {
+        players.add(player);
+        return "Welcome, " + player.playerName;
     }
 
     public void leaveSession(Player player){
