@@ -3,9 +3,10 @@ package com.paulhenstridge.blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Session {
-
+    private final String sessionId = UUID.randomUUID().toString();
     GameDeck gameDeck = new GameDeck(1);
     List<Player> players = new ArrayList<>();
     List<Player> activePlayers = new ArrayList<>();
@@ -17,42 +18,45 @@ public class Session {
 
     public Session(){
 
-         while (players.size()>0){
-             takeBets();
-             playRound();
-         }
-
+//         while (players.size()>0){
+//             takeBets();
+//             playRound();
+//         }
     }
 
-    public void takeBets(){
-        for(Player player : players){
-            System.out.println("Player " + player.playerName + " do you want to play (Y/N)?");
-            String response = scanner.nextLine().trim().toLowerCase();
-            if("y".equals(response) ){
-                player.isActive = true;
-                player.setStake(5);
-            }
-            if("n".equals(response) ){
-                System.out.println("Do you wish to exit the session? (press X to exit)");
-                String exit = scanner.nextLine().trim().toLowerCase();
-                if( "x".equals(exit)){
-                    leaveSession(player);
-                }
-            }
-        }
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public List<Player> setActivePlayers(){
-        for (Player player : players){
-            if (player.isActive){
-                activePlayers.add(player);
-            }
-        }
-        return activePlayers;
-    }
+//    public void takeBets(){
+//        for(Player player : players){
+//            System.out.println("Player " + player.playerName + " do you want to play (Y/N)?");
+//            String response = scanner.nextLine().trim().toLowerCase();
+//            if("y".equals(response) ){
+//                player.isActive = true;
+//                player.setStake(5);
+//            }
+//            if("n".equals(response) ){
+//                System.out.println("Do you wish to exit the session? (press X to exit)");
+//                String exit = scanner.nextLine().trim().toLowerCase();
+//                if( "x".equals(exit)){
+//                    leaveSession(player);
+//                }
+//            }
+//        }
+//    }
+
+//    public List<Player> setActivePlayers(){
+//        for (Player player : players){
+//            if (player.isActive){
+//                activePlayers.add(player);
+//            }
+//        }
+//        return activePlayers;
+//    }
 
     public void playRound(){
-        List<Player> activePlayers = setActivePlayers();
+//        List<Player> activePlayers = setActivePlayers();
         currentRound = new Round(activePlayers,gameDeck.shuffle());
         currentRound.dealCards();
         currentRound.hitOrStand();
@@ -66,7 +70,8 @@ public class Session {
     }
     public String joinSession(Player player) {
         players.add(player);
-        return "Welcome, " + player.playerName;
+        player.setSessionId(sessionId);
+        return sessionId;
     }
 
     public void leaveSession(Player player){
@@ -116,7 +121,5 @@ public class Session {
         return prevRounds;
     }
 
-    public void setPrevRounds(List<Round> prevRounds) {
-        this.prevRounds = prevRounds;
-    }
+
 }

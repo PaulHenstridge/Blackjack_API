@@ -3,6 +3,7 @@ package com.paulhenstridge.blackjack.model;
 public class Player {
 
     String playerName;
+    String sessionId;
     private Hand hand = new Hand();
     private int wallet = 100;
     private int wins = 0;
@@ -10,9 +11,21 @@ public class Player {
     public boolean isActive = false;
     private int stake;
 
-    public Player(String playerName){
+    public Player(String playerName){ this.playerName = playerName;}
+
+    public Player(){};
+
+    public void setPlayerName(String playerName) {
         this.playerName = playerName;
-    };
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
     public Hand getHand() {
         return hand;
