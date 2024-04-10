@@ -1,5 +1,6 @@
 package com.paulhenstridge.blackjack.controller;
 
+import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
 import com.paulhenstridge.blackjack.model.Player;
 import com.paulhenstridge.blackjack.model.Session;
 import com.paulhenstridge.blackjack.model.SessionManager;
@@ -26,7 +27,7 @@ public class BlackJackController {
     }
 
     @PostMapping("/session/{sessionId}/activePlayers")
-    public ResponseEntity<List<Player>> receiveActivePlayers(@PathVariable String sessionId, @RequestBody List<Player> activePlayers){
+    public ResponseEntity<List<PlayerBetDTO>> receiveActivePlayers(@PathVariable String sessionId, @RequestBody List<PlayerBetDTO> activePlayers){
         Optional<Session> optionalSession = sessionManager.findSessionById(sessionId);
 
         if (optionalSession.isPresent()) {

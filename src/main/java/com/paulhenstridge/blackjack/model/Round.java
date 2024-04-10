@@ -1,5 +1,6 @@
 package com.paulhenstridge.blackjack.model;
 
+import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
 import org.aspectj.lang.annotation.Before;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Round {
-    List<Player> players;
+    List<PlayerBetDTO> players;
     Dealer dealer = new Dealer();
     List<Hand> playerHands = new ArrayList<>();
     int prizePot;
@@ -17,15 +18,15 @@ public class Round {
     private final Scanner scanner = new Scanner(System.in);
     List<Player> winners = new ArrayList<>();
 
-    public Round(List<Player> players, List<Card> deck){
+    public Round(List<PlayerBetDTO> players, List<Card> deck){
         this.players = players;
         this.deck = deck;
     }
 
     public void dealCards(){
-        for( Player player : players){
-            player.getHand().getCards().add(deck.remove(0));
-            player.getHand().getCards().add(deck.remove(0));
+        for( PlayerBetDTO playerDTO : players){
+            playerDTO.getPlayer().getHand().getCards().add(deck.remove(0));
+            playerDTO.getPlayer().getHand().getCards().add(deck.remove(0));
         }
         dealer.getDealersHand().getCards().add(deck.remove(0));
         dealer.getDealersHand().getCards().add(deck.remove(0));
@@ -33,11 +34,11 @@ public class Round {
 
     public void hitOrStand() {
         System.out.println("Dealer's first card: " + dealer.getDealersHand().getCards().get(0).getValue());
-        for (Player player : players) {
-            for( Card card : player.getHand().getCards()){
+        for (PlayerBetDTO playerDTO : players) {
+            for( Card card : playerDTO.getPlayer().getHand().getCards()){
                 System.out.println(card.getValue());
             }
-            System.out.println("Player " + player.getPlayerName() + ", your hand: " + player.getHand().calcValue());
+            System.out.println("Player " + playerDTO.getPlayer().getPlayerName() + ", your hand: " + playerDTO.getPlayer().getHand().calcValue());
             while (true) {
                 System.out.print("Do you want to hit (H) or stand (S)? : ");
                 String decision = scanner.nextLine().trim().toLowerCase();
@@ -45,15 +46,15 @@ public class Round {
                 if ("s".equals(decision)) {
                     break;
                 } else if ("h".equals(decision)) {
-                    player.getHand().getCards().add(deck.remove(deck.size() - 1));
-                    for( Card card : player.getHand().getCards()){
+                    playerDTO.getPlayer().getHand().getCards().add(deck.remove(deck.size() - 1));
+                    for( Card card : playerDTO.getPlayer().getHand().getCards()){
                         System.out.println(card.getValue());
                     }
-                    System.out.println("New hand: " + player.getHand().calcValue());
-                    if (player.getHand().calcValue() == 0) {
+                    System.out.println("New hand: " + playerDTO.getPlayer().getHand().calcValue());
+                    if (playerDTO.getPlayer().getHand().calcValue() == 0) {
                         System.out.println("Bust!");
-                        player.isActive = false;
-                        player.setStake(0);
+                        playerDTO.getPlayer().isActive = false;
+                        playerDTO.getPlayer().setStake(0);
                         break;
                     }
                 } else {
@@ -82,9 +83,9 @@ public class Round {
 
     public List<Player> declareWinners(){
         int dealerScore = dealer.getDealersHand().calcValue();
-        for(Player player : players){
-            if (player.isActive && player.getHand().calcValue() > dealerScore){
-                winners.add(player);
+        for(PlayerBetDTO playerDTO : players){
+            if (playerDTO.getPlayer().isActive && playerDTO.getPlayer().getHand().calcValue() > dealerScore){
+                winners.add(playerDTO.getPlayer());
             }
         }
         if(winners.size() == 0){
