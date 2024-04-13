@@ -2,6 +2,7 @@ package com.paulhenstridge.blackjack.controller;
 
 import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
 import com.paulhenstridge.blackjack.model.Player;
+import com.paulhenstridge.blackjack.model.Round;
 import com.paulhenstridge.blackjack.model.Session;
 import com.paulhenstridge.blackjack.model.SessionManager;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,8 @@ public class BlackJackController {
         if (optionalSession.isPresent()) {
             Session session = optionalSession.get();
             session.setActivePlayers(activePlayers);
-            return ResponseEntity.ok(activePlayers);
+            Round round = session.createRound();
+            return ResponseEntity.ok(round.getPlayers());
         } else {
             return ResponseEntity.notFound().build();
         }

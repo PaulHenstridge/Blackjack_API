@@ -7,6 +7,8 @@ public class Hand {
     private List<Card> cards = new ArrayList<>();
     private int value = 0;
 
+    private boolean bust = false;
+
     public Hand() {}
 
     public int calcValue(){
@@ -14,7 +16,10 @@ public class Hand {
         for(Card card : cards){
             value += card.getValue();
         }
-        return value > 21 ? 0 : value;
+        if (value >21){
+            setBust(true);
+        }
+        return value;
     }
 
     public List<Card> getCards() {
@@ -31,5 +36,13 @@ public class Hand {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public boolean getBust() {
+        return bust;
+    }
+
+    public void setBust(boolean bust) {
+        bust = bust;
     }
 }
