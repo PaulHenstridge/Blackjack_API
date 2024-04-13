@@ -1,6 +1,7 @@
 package com.paulhenstridge.blackjack.controller;
 
 import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
+import com.paulhenstridge.blackjack.DTOs.PlayerHandDTO;
 import com.paulhenstridge.blackjack.model.Player;
 import com.paulhenstridge.blackjack.model.Round;
 import com.paulhenstridge.blackjack.model.Session;
@@ -41,6 +42,9 @@ public class BlackJackController {
         }
     }
 
-//    @GetMapping("/")
+    @GetMapping("/session/{sessionId}/hit/{playerId}")
+    public ResponseEntity<PlayerHandDTO> hit(@PathVariable String sessionId, @PathVariable String playerId){
+        // hit me!
+    }
 
 }

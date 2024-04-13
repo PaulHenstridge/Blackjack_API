@@ -14,6 +14,8 @@ public class Session {
     List<PlayerBetDTO> activePlayers = new ArrayList<>();
     List<Round> prevRounds = new ArrayList<>();
 
+    Round currentRound;
+
 
     public Session(){}
 
@@ -22,8 +24,9 @@ public class Session {
     }
 
     public Round createRound(){
-//        List<Player> activePlayers = setActivePlayers();
-        Round currentRound = new Round(activePlayers,gameDeck.shuffle());
+        // check if there is not already an ongoing round...
+
+        currentRound = new Round(activePlayers,gameDeck.shuffle());
         currentRound.dealCards();
         return currentRound;
 //        currentRound.hitOrStand();

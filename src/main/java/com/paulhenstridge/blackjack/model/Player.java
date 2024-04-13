@@ -1,7 +1,10 @@
 package com.paulhenstridge.blackjack.model;
 
+import java.util.UUID;
+
 public class Player {
 
+    private final String playerId = UUID.randomUUID().toString();
     String playerName;
     String sessionId;
     private Hand hand = new Hand();
@@ -61,5 +64,13 @@ public class Player {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }
