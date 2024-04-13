@@ -1,6 +1,7 @@
 package com.paulhenstridge.blackjack.model;
 
 import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
+import com.paulhenstridge.blackjack.DTOs.PlayerHandDTO;
 import org.aspectj.lang.annotation.Before;
 
 import java.util.ArrayList;
@@ -30,15 +31,23 @@ public class Round {
         dealer.getDealersHand().getCards().add(deck.remove(0));
     }
 
-    public void hit(PlayerBetDTO playerDTO){
+    public PlayerHandDTO hit(PlayerBetDTO playerDTO){
         playerDTO.getPlayer().getHand().getCards().add(deck.remove(deck.size() - 1));
-        int playerHandValue = playerDTO.getPlayer().getHand().calcValue();
-        boolean isBust = playerDTO.getPlayer().getHand().getBust();
-        
-
+        return createPlayerHandDTO(playerDTO);
     };
 
-    public void stand(Player player){};
+    public PlayerHandDTO stand(PlayerBetDTO playerDTO){
+        return createPlayerHandDTO(playerDTO);
+    };
+
+    private PlayerHandDTO createPlayerHandDTO(PlayerBetDTO playerDTO){
+        int playerHandValue = playerDTO.getPlayer().getHand().calcValue();
+        int numberOfCards = playerDTO.getPlayer().getHand().getCards().size();
+        boolean isBust = playerDTO.getPlayer().getHand().getBust();
+
+        PlayerHandDTO playerHand = new PlayerHandDTO(playerHandValue,numberOfCards,isBust);
+        return playerHand;
+    }
 
 //    public void hitOrStand() {
 //        System.out.println("Dealer's first card: " + dealer.getDealersHand().getCards().get(0).getValue());
