@@ -42,10 +42,10 @@ public class Round {
 
     private PlayerHandDTO createPlayerHandDTO(PlayerBetDTO playerDTO){
         int playerHandValue = playerDTO.getPlayer().getHand().calcValue();
-        int numberOfCards = playerDTO.getPlayer().getHand().getCards().size();
+        List<Card> cards = playerDTO.getPlayer().getHand().getCards();
         boolean isBust = playerDTO.getPlayer().getHand().getBust();
 
-        PlayerHandDTO playerHand = new PlayerHandDTO(playerHandValue,numberOfCards,isBust);
+        PlayerHandDTO playerHand = new PlayerHandDTO(playerHandValue,cards,isBust);
         return playerHand;
     }
 
@@ -81,21 +81,17 @@ public class Round {
 //        }
 //    }
 
-    public void dealersTurn() {
-        System.out.println("Dealer's first card: " + dealer.getDealersHand().getCards().get(0).getValue());
-        System.out.println("Dealer's second card: " + dealer.getDealersHand().getCards().get(1).getValue());
-        int i = 2;
-        while (dealer.getDealersHand().calcValue() < 16 && dealer.getDealersHand().calcValue() > 0) {
+    public PlayerHandDTO dealersTurn() {
+
+        while (dealer.getDealersHand().calcValue() < 16 && dealer.getDealersHand().calcValue() <21) {
             dealer.getDealersHand().getCards().add(deck.remove(deck.size() - 1));
-            System.out.println("Dealer's draws a: " + dealer.getDealersHand().getCards().get(i).getValue());
-            i++;
 
             for (Card card : dealer.getDealersHand().getCards()) {
                 System.out.println(card.getValue());
             }
             System.out.println("Dealers hand: " + dealer.getDealersHand().calcValue());
-
         }
+        return new PlayerHandDTO(dealer.getDealersHand().calcValue(),dealer.getDealersHand().getCards(),dealer.getDealersHand().getBust());
     }
 
     public List<Player> declareWinners() {

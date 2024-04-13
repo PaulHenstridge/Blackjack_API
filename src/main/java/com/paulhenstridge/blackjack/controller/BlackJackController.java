@@ -41,6 +41,6 @@ public class BlackJackController {
         }
     }
 
-    @GetMapping("/")
+//    @GetMapping("/")
 
 }

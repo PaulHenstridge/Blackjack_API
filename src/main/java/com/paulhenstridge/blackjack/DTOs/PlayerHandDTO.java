@@ -1,13 +1,18 @@
 package com.paulhenstridge.blackjack.DTOs;
 
+import com.paulhenstridge.blackjack.model.Card;
+
+import java.util.List;
+
 public class PlayerHandDTO {
     int value;
-    int numberOfCards;
+    List<Card> cards;
+    int numberOfCards = cards.size();
     boolean isBust;
 
-    public PlayerHandDTO(int value, int numberOfCards, boolean isBust){
+    public PlayerHandDTO(int value, List<Card> cards, boolean isBust){
         this.value = value;
-        this.numberOfCards = numberOfCards;
+        this.cards = cards;
         this.isBust = isBust;
     }
 
@@ -20,11 +25,11 @@ public class PlayerHandDTO {
     }
 
     public int getNumberOfCards() {
-        return numberOfCards;
+        return cards.size();
     }
 
     public void setNumberOfCards(int numberOfCards) {
-        this.numberOfCards = numberOfCards;
+        this.numberOfCards = cards.size();
     }
 
     public boolean isBust() {
