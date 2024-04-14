@@ -43,8 +43,15 @@ public class BlackJackController {
     }
 
     @GetMapping("/session/{sessionId}/hit/{playerId}")
-    public ResponseEntity<PlayerHandDTO> hit(@PathVariable String sessionId, @PathVariable String playerId){
-        // hit me!
+    public ResponseEntity<PlayerHandDTO> hit( @PathVariable String playerId){
+       Optional<Player> optionalPlayer = sessionManager.getAllPlayers().stream()
+               .filter(p -> p.getPlayerId().equals(playerId))
+               .findFirst();
+
+        if (optionalPlayer.isPresent()){
+            Player player = optionalPlayer.get();
+            // Session session = sessionManager.getActiveSessions().stream().filter(p -> p.getSessionId().equals(player.getSessionId()));
+        }
     }
 
 }

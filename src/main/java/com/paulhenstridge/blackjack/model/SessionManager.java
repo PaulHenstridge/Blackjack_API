@@ -7,13 +7,14 @@ import java.util.Optional;
 public class SessionManager {
 
     private List<Session> activeSessions;
+    private List<Player> allPlayers;
 
     public SessionManager() {
         this.activeSessions = new ArrayList<>();
     }
 
     public synchronized String joiOrCreateSession(Player player){
-
+        allPlayers.add(player);
         for (Session session : activeSessions) {
             if (session.canJoin()) {
                 return session.joinSession(player);
@@ -29,6 +30,14 @@ public class SessionManager {
         return activeSessions.stream()
                 .filter(session -> session.getSessionId().equals(sessionId))
                 .findFirst();
+    }
+
+    public List<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public List<Session> getActiveSessions() {
+        return activeSessions;
     }
 }
 
