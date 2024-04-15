@@ -7,13 +7,14 @@ import java.util.List;
 public class PlayerHandDTO {
     int value;
     List<Card> cards;
-    int numberOfCards = cards.size();
+    int numberOfCards;
     boolean isBust;
 
     public PlayerHandDTO(int value, List<Card> cards, boolean isBust){
         this.value = value;
         this.cards = cards;
         this.isBust = isBust;
+        this.numberOfCards = (cards != null) ? cards.size() : 0;
     }
 
     public int getValue() {

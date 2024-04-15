@@ -25,7 +25,7 @@ public class BlackJackController {
     public ResponseEntity<String> joinGame(@RequestBody Player player){
         System.out.println(player.getPlayerName() + " tried to join");
         String sessionId = sessionManager.joiOrCreateSession(player);
-        return ResponseEntity.ok(player.getPlayerName() + "joined session " + sessionId);
+        return ResponseEntity.ok(player.getPlayerName() + "PlayerId: "+ player.getPlayerId() + "joined session " + sessionId);
     }
 
     @PostMapping("/session/{sessionId}/activePlayers")
@@ -43,15 +43,22 @@ public class BlackJackController {
     }
 
     @GetMapping("/session/{sessionId}/hit/{playerId}")
-    public ResponseEntity<PlayerHandDTO> hit( @PathVariable String playerId){
-       Optional<Player> optionalPlayer = sessionManager.getAllPlayers().stream()
-               .filter(p -> p.getPlayerId().equals(playerId))
-               .findFirst();
+    public ResponseEntity<PlayerHandDTO> hit( @PathVariable String sessionId, @PathVariable String playerId){
 
-        if (optionalPlayer.isPresent()){
-            Player player = optionalPlayer.get();
-            // Session session = sessionManager.getActiveSessions().stream().filter(p -> p.getSessionId().equals(player.getSessionId()));
+        Optional<Session> optionalSession = sessionManager.getActiveSessions().stream().filter(s -> s.getSessionId().equals(sessionId)).findFirst();
+        if (optionalSession.isPresent()) {
+            System.out.println("session present");
+            Session session = optionalSession.get();
+
+           Optional<Player> optionalPlayer = session.getPlayers().stream().filter(p -> p.getPlayerId().equals(playerId)).findFirst();
+            if (optionalPlayer.isPresent()) {
+                System.out.println("player present");
+
+                Player player = optionalPlayer.get();
+
+                return ResponseEntity.ok(session.getCurrentRound().hit(player));
+            }
         }
-    }
-
+            return ResponseEntity.notFound().build();
+        }
 }

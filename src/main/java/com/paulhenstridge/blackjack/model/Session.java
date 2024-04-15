@@ -35,6 +35,10 @@ public class Session {
 //        prevRounds.add(currentRound);
     }
 
+    public Round getCurrentRound() {
+        return currentRound;
+    }
+
     public boolean canJoin(){
         return (players.size() < 4);
     }

@@ -11,6 +11,7 @@ public class SessionManager {
 
     public SessionManager() {
         this.activeSessions = new ArrayList<>();
+        this.allPlayers = new ArrayList<>();
     }
 
     public synchronized String joiOrCreateSession(Player player){

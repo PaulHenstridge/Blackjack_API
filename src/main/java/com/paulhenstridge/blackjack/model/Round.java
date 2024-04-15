@@ -31,19 +31,19 @@ public class Round {
         dealer.getDealersHand().getCards().add(deck.remove(0));
     }
 
-    public PlayerHandDTO hit(PlayerBetDTO playerDTO){
-        playerDTO.getPlayer().getHand().getCards().add(deck.remove(deck.size() - 1));
-        return createPlayerHandDTO(playerDTO);
+    public PlayerHandDTO hit(Player player){
+        player.getHand().getCards().add(deck.remove(deck.size() - 1));
+        return createPlayerHandDTO(player);
     };
 
-    public PlayerHandDTO stand(PlayerBetDTO playerDTO){
-        return createPlayerHandDTO(playerDTO);
+    public PlayerHandDTO stand(Player player){
+        return createPlayerHandDTO(player);
     };
 
-    private PlayerHandDTO createPlayerHandDTO(PlayerBetDTO playerDTO){
-        int playerHandValue = playerDTO.getPlayer().getHand().calcValue();
-        List<Card> cards = playerDTO.getPlayer().getHand().getCards();
-        boolean isBust = playerDTO.getPlayer().getHand().getBust();
+    private PlayerHandDTO createPlayerHandDTO(Player player){
+        int playerHandValue = player.getHand().calcValue();
+        List<Card> cards = player.getHand().getCards();
+        boolean isBust = player.getHand().getBust();
 
         PlayerHandDTO playerHand = new PlayerHandDTO(playerHandValue,cards,isBust);
         return playerHand;
