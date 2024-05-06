@@ -3,20 +3,20 @@ package com.paulhenstridge.blackjack.DTOs;
 import com.paulhenstridge.blackjack.model.Player;
 
 public class PlayerBetDTO {
-    private Player player;
+    private String playerId;
     private int betValue;
 
-    public PlayerBetDTO(Player player, int betValue){
-        this.player = player;
+    public PlayerBetDTO(String playerId, int betValue){
+        this.playerId = playerId;
         this.betValue = betValue;
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPlayerId() {
+        return playerId;
     }
 
     public void setPlayer(Player player) {
-        this.player = player;
+        this.playerId = player.getPlayerId();
     }
 
     public int getBetValue() {

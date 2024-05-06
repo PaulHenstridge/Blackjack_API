@@ -2,16 +2,13 @@ package com.paulhenstridge.blackjack.model;
 
 import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class Session {
     private final String sessionId = UUID.randomUUID().toString();
     GameDeck gameDeck = new GameDeck(1);
     List<Player> players = new ArrayList<>();
-    List<PlayerBetDTO> activePlayers = new ArrayList<>();
+    List<Player> activePlayers = new ArrayList<>();
     List<Round> prevRounds = new ArrayList<>();
 
     Round currentRound;
@@ -68,11 +65,11 @@ public class Session {
         this.players = players;
     }
 
-    public List<PlayerBetDTO> getActivePlayers() {
+    public List<Player> getActivePlayers() {
         return activePlayers;
     }
 
-    public void setActivePlayers(List<PlayerBetDTO> activePlayers) {
+    public void setActivePlayers(List<Player> activePlayers) {
         this.activePlayers = activePlayers;
     }
 
@@ -81,5 +78,12 @@ public class Session {
         return prevRounds;
     }
 
-
+    public Optional<Player> getPlayerById(String id){
+        for (Player player: players){
+            if(player.getPlayerId().equals(id)){
+                return Optional.of(player);
+            }
+        }
+    return Optional.empty();
+    }
 }

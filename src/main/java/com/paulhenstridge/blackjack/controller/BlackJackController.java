@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/game")
@@ -29,11 +30,21 @@ public class BlackJackController {
     }
 
     @PostMapping("/session/{sessionId}/activePlayers")
-    public ResponseEntity<List<PlayerBetDTO>> receiveActivePlayers(@PathVariable String sessionId, @RequestBody List<PlayerBetDTO> activePlayers){
+    public ResponseEntity<List<Player>> receiveActivePlayers(@PathVariable String sessionId, @RequestBody List<PlayerBetDTO> activePlayerDTOs){
         Optional<Session> optionalSession = sessionManager.findSessionById(sessionId);
 
         if (optionalSession.isPresent()) {
             Session session = optionalSession.get();
+
+            // TODO - take a list of player Ids from req body, map to new List called activePlayers
+            List<Player> activePlayers = activePlayerDTOs.stream()
+                            .map(PlayerBetDTO::getPlayerId)
+                    .map(playerId -> session.getPlayerById(playerId))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+
+
             session.setActivePlayers(activePlayers);
             Round round = session.createRound();
             return ResponseEntity.ok(round.getPlayers());
@@ -53,7 +64,6 @@ public class BlackJackController {
            Optional<Player> optionalPlayer = session.getPlayers().stream().filter(p -> p.getPlayerId().equals(playerId)).findFirst();
             if (optionalPlayer.isPresent()) {
                 System.out.println("player present");
-
                 Player player = optionalPlayer.get();
 
                 return ResponseEntity.ok(session.getCurrentRound().hit(player));

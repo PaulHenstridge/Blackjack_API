@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Round {
-    List<PlayerBetDTO> players;
+    List<Player> players;
     Dealer dealer = new Dealer();
     List<Hand> playerHands = new ArrayList<>();
     int prizePot;
@@ -17,15 +17,15 @@ public class Round {
     List<Card> deck;
     List<Player> winners = new ArrayList<>();
 
-    public Round(List<PlayerBetDTO> players, List<Card> deck) {
+    public Round(List<Player> players, List<Card> deck) {
         this.players = players;
         this.deck = deck;
     }
 
     public void dealCards() {
-        for (PlayerBetDTO playerDTO : players) {
-            playerDTO.getPlayer().getHand().getCards().add(deck.remove(0));
-            playerDTO.getPlayer().getHand().getCards().add(deck.remove(0));
+        for (Player player : players) {
+            player.getHand().getCards().add(deck.remove(0));
+            player.getHand().getCards().add(deck.remove(0));
         }
         dealer.getDealersHand().getCards().add(deck.remove(0));
         dealer.getDealersHand().getCards().add(deck.remove(0));
@@ -96,9 +96,9 @@ public class Round {
 
     public List<Player> declareWinners() {
         int dealerScore = dealer.getDealersHand().calcValue();
-        for (PlayerBetDTO playerDTO : players) {
-            if (playerDTO.getPlayer().isActive && playerDTO.getPlayer().getHand().calcValue() > dealerScore) {
-                winners.add(playerDTO.getPlayer());
+        for (Player player : players) {
+            if (player.isActive && player.getHand().calcValue() > dealerScore) {
+                winners.add(player);
             }
         }
         if (winners.size() == 0) {
@@ -111,7 +111,7 @@ public class Round {
         return winners;
     }
 
-    public List<PlayerBetDTO> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
