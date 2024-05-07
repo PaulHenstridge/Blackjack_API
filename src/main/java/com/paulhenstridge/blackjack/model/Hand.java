@@ -43,6 +43,6 @@ public class Hand {
     }
 
     public void setBust(boolean bust) {
-        bust = bust;
+        this.bust = bust;
     }
 }
