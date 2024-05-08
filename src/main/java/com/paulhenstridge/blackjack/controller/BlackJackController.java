@@ -36,7 +36,7 @@ public class BlackJackController {
         if (optionalSession.isPresent()) {
             Session session = optionalSession.get();
 
-            // TODO - take a list of player Ids from req body, map to new List called activePlayers
+            // take a list of player Ids from req body, map to new List of Players
             List<Player> activePlayers = activePlayerDTOs.stream()
                             .map(PlayerBetDTO::getPlayerId)
                     .map(playerId -> session.getPlayerById(playerId))

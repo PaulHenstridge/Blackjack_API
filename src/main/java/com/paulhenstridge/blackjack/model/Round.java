@@ -24,15 +24,16 @@ public class Round {
 
     public void dealCards() {
         for (Player player : players) {
-            player.getHand().getCards().add(deck.remove(0));
-            player.getHand().getCards().add(deck.remove(0));
+            // todo - create an addCard method in hand.  update hand value within it...?
+            player.getHand().addCard(deck.remove(0));
+            player.getHand().addCard(deck.remove(0));
         }
-        dealer.getDealersHand().getCards().add(deck.remove(0));
-        dealer.getDealersHand().getCards().add(deck.remove(0));
+        dealer.getDealersHand().addCard(deck.remove(0));
+        dealer.getDealersHand().addCard(deck.remove(0));
     }
 
     public PlayerHandDTO hit(Player player){
-        player.getHand().getCards().add(deck.remove(deck.size() - 1));
+        player.getHand().addCard(deck.remove(deck.size() - 1));
         return createPlayerHandDTO(player);
     };
 
@@ -84,7 +85,7 @@ public class Round {
     public PlayerHandDTO dealersTurn() {
 
         while (dealer.getDealersHand().calcValue() < 16 && dealer.getDealersHand().calcValue() <21) {
-            dealer.getDealersHand().getCards().add(deck.remove(deck.size() - 1));
+            dealer.getDealersHand().addCard(deck.remove(deck.size() - 1));
 
             for (Card card : dealer.getDealersHand().getCards()) {
                 System.out.println(card.getValue());
