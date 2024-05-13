@@ -61,16 +61,9 @@ public class Session {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
 
     public List<Player> getActivePlayers() {
         return activePlayers;
-    }
-
-    public void setActivePlayers(List<Player> activePlayers) {
-        this.activePlayers = activePlayers;
     }
 
 

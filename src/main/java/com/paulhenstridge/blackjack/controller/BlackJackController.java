@@ -1,5 +1,6 @@
 package com.paulhenstridge.blackjack.controller;
 
+import com.paulhenstridge.blackjack.DTOs.JoinResponseDTO;
 import com.paulhenstridge.blackjack.DTOs.PlayerBetDTO;
 import com.paulhenstridge.blackjack.DTOs.PlayerHandDTO;
 import com.paulhenstridge.blackjack.model.Player;
@@ -23,35 +24,45 @@ public class BlackJackController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> joinGame(@RequestBody Player player){
+    public ResponseEntity<JoinResponseDTO> joinGame(@RequestBody Player player){
         System.out.println(player.getPlayerName() + " tried to join");
+        String playerName = player.getPlayerName();
+        String playerId = player.getPlayerId();
         String sessionId = sessionManager.joiOrCreateSession(player);
-        return ResponseEntity.ok(player.getPlayerName() + "PlayerId: "+ player.getPlayerId() + "joined session " + sessionId);
+        return ResponseEntity.ok(new JoinResponseDTO(playerName, playerId, sessionId));
     }
 
-    @PostMapping("/session/{sessionId}/activePlayers")
-    public ResponseEntity<List<Player>> receiveActivePlayers(@PathVariable String sessionId, @RequestBody List<PlayerBetDTO> activePlayerDTOs){
-        Optional<Session> optionalSession = sessionManager.findSessionById(sessionId);
-
-        if (optionalSession.isPresent()) {
-            Session session = optionalSession.get();
-
-            // take a list of player Ids from req body, map to new List of Players
-            List<Player> activePlayers = activePlayerDTOs.stream()
-                            .map(PlayerBetDTO::getPlayerId)
-                    .map(playerId -> session.getPlayerById(playerId))
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .collect(Collectors.toList());
 
 
-            session.setActivePlayers(activePlayers);
-            Round round = session.createRound();
-            return ResponseEntity.ok(round.getPlayers());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    // todo - make a placeBet() route
+    //  posts the playerId and the bet amount to the back end.
+    //  use Id to get player, add Player to activePlayers
+    //  F/e times out and sends a default fold if no bet is placed in x secs
+    //  create a fold() route, updates player attribute on b/e
+    //  when all players in session have bet or folded, send all info inc cards, bets pot etc
+//    @PostMapping("/session/{sessionId}/activePlayers")
+//    public ResponseEntity<List<Player>> receiveActivePlayers(@PathVariable String sessionId, @RequestBody List<PlayerBetDTO> activePlayerDTOs){
+//        Optional<Session> optionalSession = sessionManager.findSessionById(sessionId);
+//
+//        if (optionalSession.isPresent()) {
+//            Session session = optionalSession.get();
+//
+//            // take a list of player Ids from req body, map to new List of Players
+//            List<Player> activePlayers = activePlayerDTOs.stream()
+//                            .map(PlayerBetDTO::getPlayerId)
+//                    .map(playerId -> session.getPlayerById(playerId))
+//                    .filter(Optional::isPresent)
+//                    .map(Optional::get)
+//                    .collect(Collectors.toList());
+//
+//
+//            session.setActivePlayers(activePlayers);
+//            Round round = session.createRound();
+//            return ResponseEntity.ok(round.getPlayers());
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     @GetMapping("/session/{sessionId}/hit/{playerId}")
     public ResponseEntity<PlayerHandDTO> hit( @PathVariable String sessionId, @PathVariable String playerId){

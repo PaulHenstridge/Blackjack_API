@@ -24,7 +24,6 @@ public class Round {
 
     public void dealCards() {
         for (Player player : players) {
-            // todo - create an addCard method in hand.  update hand value within it...?
             player.getHand().addCard(deck.remove(0));
             player.getHand().addCard(deck.remove(0));
         }
